@@ -1,0 +1,434 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.outer{display:flex;justify-content:center;padding:1rem 0;background:var(--color-background-secondary);border-radius:var(--border-radius-lg)}
+.phone{width:320px;background:var(--color-background-primary);border-radius:28px;border:1px solid var(--color-border-secondary);overflow:hidden;font-family:var(--font-sans)}
+.sbar{background:#7F77DD;padding:10px 18px 8px;display:flex;justify-content:space-between}
+.sbar span{font-size:12px;color:white}
+.screen{display:none;flex-direction:column;min-height:580px}
+.screen.active{display:flex}
+.nbar{background:#7F77DD;padding:12px 16px 14px;display:flex;align-items:center;gap:10px}
+.nbk{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.nbk svg{width:14px;height:14px}
+.ntitle{font-size:15px;font-weight:500;color:white;flex:1}
+.nstep{font-size:11px;color:rgba(255,255,255,.7)}
+.content{flex:1;padding:16px;overflow-y:auto}
+.bbar{padding:12px 16px;background:var(--color-background-primary);border-top:0.5px solid var(--color-border-tertiary)}
+.btn{width:100%;padding:12px;background:#7F77DD;color:white;border:none;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer}
+.btn:active{background:#534AB7}
+.btn-off{background:var(--color-border-secondary);cursor:not-allowed}
+.slabel{font-size:10px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:12px;margin-bottom:10px}
+.fi{font-size:13px;padding:8px 10px;border-radius:8px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-primary);width:100%}
+.fl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.rbtn{padding:6px 12px;border-radius:16px;border:0.5px solid var(--color-border-secondary);font-size:12px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary)}
+.rbtn.on{background:#EEEDFE;border-color:#7F77DD;color:#3C3489;font-weight:500}
+.ptrack{height:4px;background:var(--color-border-tertiary);border-radius:2px;margin:10px 16px 0}
+.pfill{height:100%;background:#7F77DD;border-radius:2px;transition:width .3s}
+.plabel{font-size:11px;color:var(--color-text-secondary);text-align:right;padding:4px 16px 6px}
+.qwrap{padding:16px}
+.qnum{font-size:11px;font-weight:500;color:#7F77DD;margin-bottom:6px}
+.qtext{font-size:14px;font-weight:500;color:var(--color-text-primary);line-height:1.55;margin-bottom:12px}
+.qopt{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;border:0.5px solid var(--color-border-tertiary);margin-bottom:7px;cursor:pointer}
+.qopt.on{border-color:#7F77DD;background:#EEEDFE}
+.qlabel{width:20px;height:20px;border-radius:50%;border:0.5px solid var(--color-border-secondary);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--color-text-secondary);flex-shrink:0;margin-top:1px}
+.qopt.on .qlabel{background:#7F77DD;border-color:#7F77DD;color:white}
+.qtext2{font-size:12px;color:var(--color-text-secondary);line-height:1.55;flex:1}
+.qopt.on .qtext2{color:#3C3489}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.btrack{flex:1;height:8px;border-radius:4px;background:var(--color-border-tertiary)}
+.bfill{height:100%;border-radius:4px}
+.tier-card{border:0.5px solid var(--color-border-tertiary);border-radius:10px;padding:10px;margin-bottom:8px;cursor:pointer;transition:all .15s}
+.tier-card.on{border:2px solid #7F77DD;background:#FAFAFF}
+.rec-chip{flex:1;border:0.5px solid var(--color-border-tertiary);border-radius:8px;padding:8px 4px;text-align:center}
+.picker-item{border:0.5px solid var(--color-border-tertiary);border-radius:8px;padding:6px 4px;text-align:center;cursor:pointer}
+.picker-item.rec-item{border-color:#AFA9EC;background:#FAFAFF}
+.picker-item.chosen{border:2px solid #7F77DD;background:#EEEDFE}
+</style>
+
+<div class="outer"><div class="phone">
+  <div class="sbar"><span class="status-time">9:41</span><span>●●● ▌</span></div>
+
+  <!-- 首頁 -->
+  <div class="screen active" id="s-home">
+    <div style="background:#7F77DD;padding:20px 16px 24px">
+      <div style="font-size:13px;color:rgba(255,255,255,.8);margin-bottom:4px">你好，歡迎來到</div>
+      <div style="font-size:20px;font-weight:500;color:white;margin-bottom:2px">五行能量手鍊</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.7)">為你量身打造的水晶守護</div>
+    </div>
+    <div style="margin:0 16px;margin-top:-14px;background:var(--color-background-primary);border-radius:12px;border:0.5px solid var(--color-border-tertiary);padding:14px;margin-bottom:14px">
+      <div style="font-size:14px;font-weight:500;margin-bottom:4px">開始打造你的手鍊</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:10px">填資料 → 10題測驗 → 選方案 → 設計手鍊</div>
+      <button class="btn" onclick="go('s-profile')">開始測驗</button>
+    </div>
+    <div style="padding:0 16px 8px">
+      <div class="slabel">快速入口</div>
+      <div class="card" style="padding:4px 12px">
+        <div style="display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer" onclick="go('s-profile')">
+          <div style="width:32px;height:32px;border-radius:8px;background:#EEEDFE;display:flex;align-items:center;justify-content:center;font-size:16px">✦</div>
+          <div style="flex:1"><div style="font-size:13px;font-weight:500">五行測驗</div><div style="font-size:11px;color:var(--color-text-secondary)">10 題找出你需要的能量</div></div>
+          <div style="color:var(--color-text-tertiary)">›</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer" onclick="go('s-measure')">
+          <div style="width:32px;height:32px;border-radius:8px;background:#E1F5EE;display:flex;align-items:center;justify-content:center;font-size:16px">○</div>
+          <div style="flex:1"><div style="font-size:13px;font-weight:500">量手圍</div><div style="font-size:11px;color:var(--color-text-secondary)">三種簡單量法</div></div>
+          <div style="color:var(--color-text-tertiary)">›</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:11px 0;cursor:pointer" onclick="go('s-design')">
+          <div style="width:32px;height:32px;border-radius:8px;background:#FAEEDA;display:flex;align-items:center;justify-content:center;font-size:16px">◈</div>
+          <div style="flex:1"><div style="font-size:13px;font-weight:500">設計手鍊</div><div style="font-size:11px;color:var(--color-text-secondary)">圓形設計圖，拖放水晶</div></div>
+          <div style="color:var(--color-text-tertiary)">›</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;background:var(--color-background-primary);border-top:0.5px solid var(--color-border-tertiary);padding:8px 0 10px">
+      <div style="flex:1;text-align:center;cursor:pointer"><div style="font-size:18px">⌂</div><div style="font-size:10px;color:#7F77DD">首頁</div></div>
+      <div style="flex:1;text-align:center;cursor:pointer" onclick="go('s-profile')"><div style="font-size:18px">✦</div><div style="font-size:10px;color:var(--color-text-tertiary)">測驗</div></div>
+      <div style="flex:1;text-align:center;cursor:pointer" onclick="go('s-design')"><div style="font-size:18px">◈</div><div style="font-size:10px;color:var(--color-text-tertiary)">設計</div></div>
+      <div style="flex:1;text-align:center;cursor:pointer"><div style="font-size:18px">◎</div><div style="font-size:10px;color:var(--color-text-tertiary)">訂單</div></div>
+    </div>
+  </div>
+
+  <!-- 基本資料 -->
+  <div class="screen" id="s-profile">
+    <div class="nbar"><div class="nbk" onclick="go('s-home')"><svg viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ntitle">基本資料</div><div class="nstep">準備中</div></div>
+    <div class="content">
+      <div class="slabel">填寫資料</div>
+      <div class="frow"><div><div class="fl">姓名</div><input class="fi" placeholder="你的名字"></div><div><div class="fl">出生年份</div><input class="fi" placeholder="例：1990"></div></div>
+      <div class="frow"><div><div class="fl">出生月份</div><input class="fi" placeholder="例：5"></div><div><div class="fl">出生日期</div><input class="fi" placeholder="例：20"></div></div>
+      <div style="margin-bottom:10px"><div class="fl" style="margin-bottom:6px">性別</div><div style="display:flex;gap:6px"><div class="rbtn on" onclick="pick(this)">女</div><div class="rbtn" onclick="pick(this)">男</div><div class="rbtn" onclick="pick(this)">不指定</div></div></div>
+      <div><div class="fl" style="margin-bottom:6px">目前最困擾的是</div><div style="display:flex;gap:6px;flex-wrap:wrap"><div class="rbtn on" onclick="pick(this)">工作壓力</div><div class="rbtn" onclick="pick(this)">情緒起伏</div><div class="rbtn" onclick="pick(this)">人際關係</div><div class="rbtn" onclick="pick(this)">身體疲勞</div></div></div>
+    </div>
+    <div class="bbar"><button class="btn" onclick="startQuiz()">開始 10 題測驗 →</button></div>
+  </div>
+
+  <!-- 測驗 -->
+  <div class="screen" id="s-quiz">
+    <div class="nbar"><div class="nbk" onclick="prevQ()"><svg viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ntitle" id="qntitle">題目 1／10</div></div>
+    <div class="ptrack"><div class="pfill" id="qprog" style="width:10%"></div></div>
+    <div class="plabel" id="qplabel">1 / 10</div>
+    <div class="qwrap" id="qcontent"></div>
+    <div class="bbar"><button class="btn btn-off" id="qbtn" onclick="nextQ()">選擇後繼續</button></div>
+  </div>
+
+  <!-- 五行結果 + 選方案 -->
+  <div class="screen" id="s-result">
+    <div class="nbar"><div class="nbk" onclick="go('s-quiz')"><svg viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ntitle">你的五行分析</div></div>
+    <div class="content" id="result-content"></div>
+    <div class="bbar"><button class="btn btn-off" id="tier-next-btn" onclick="goDesign()">選好方案後開始設計 →</button></div>
+  </div>
+
+  <!-- 量手圍 -->
+  <div class="screen" id="s-measure">
+    <div class="nbar"><div class="nbk" onclick="go('s-result')"><svg viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ntitle">量手圍</div></div>
+    <div class="content">
+      <div style="background:#EEEDFE;border-radius:10px;padding:14px;text-align:center;margin-bottom:12px">
+        <div style="width:80px;height:80px;border-radius:50%;border:3px dashed #7F77DD;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#534AB7;font-weight:500">手腕圍</div>
+        <div style="font-size:11px;color:#534AB7">軟尺繞手腕最細處量一圈</div>
+      </div>
+      <div class="slabel">三種量法</div>
+      <div class="card" style="padding:10px 12px;margin-bottom:10px">
+        <div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px"><div style="width:20px;height:20px;border-radius:50%;background:#EEEDFE;color:#3C3489;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div><div style="font-size:12px;color:var(--color-text-secondary);line-height:1.5"><span style="color:var(--color-text-primary);font-weight:500">軟尺法</span>　直接繞手腕量一圈</div></div>
+        <div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px"><div style="width:20px;height:20px;border-radius:50%;background:#EEEDFE;color:#3C3489;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div><div style="font-size:12px;color:var(--color-text-secondary);line-height:1.5"><span style="color:var(--color-text-primary);font-weight:500">紙條法</span>　紙條繞腕後展開量長度</div></div>
+        <div style="display:flex;gap:8px;align-items:flex-start"><div style="width:20px;height:20px;border-radius:50%;background:#EEEDFE;color:#3C3489;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div><div style="font-size:12px;color:var(--color-text-secondary);line-height:1.5"><span style="color:var(--color-text-primary);font-weight:500">手指法</span>　四指並攏寬 × 3.14</div></div>
+      </div>
+      <div class="slabel">輸入手圍</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <input class="fi" id="wrist-cm" type="number" placeholder="例：15.5" step="0.5" min="10" max="25" style="flex:1;font-size:15px" oninput="updateBeadCount()">
+        <span style="font-size:13px;color:var(--color-text-secondary)">cm</span>
+      </div>
+      <div style="font-size:11px;color:var(--color-text-secondary);line-height:1.6;background:var(--color-background-secondary);border-radius:8px;padding:8px 10px">
+        輸入後系統會自動計算你的手鍊珠子數量，設計圖的格子會跟著變化。
+      </div>
+    </div>
+    <div class="bbar"><button class="btn" onclick="go('s-design')">前往設計手鍊 →</button></div>
+  </div>
+
+  <!-- 設計手鍊（圓形） -->
+  <div class="screen" id="s-design">
+    <div class="nbar"><div class="nbk" onclick="go('s-measure')"><svg viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ntitle">設計你的手鍊</div><div class="nstep" id="design-bead-count">18 顆</div></div>
+    <div class="content" style="padding:12px 16px">
+      <div class="slabel">點珠子位置放入水晶・再點可移除</div>
+      <div style="display:flex;justify-content:center;margin-bottom:14px">
+        <canvas id="bracelet-canvas" width="270" height="270" style="cursor:pointer"></canvas>
+      </div>
+      <div class="slabel">選擇水晶 <span style="color:#7F77DD;font-weight:500;font-size:10px">★ 推薦補充</span></div>
+      <div id="crystal-picker" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px"></div>
+      <div style="background:var(--color-background-secondary);border-radius:8px;padding:8px 10px;font-size:11px;color:var(--color-text-secondary);line-height:1.6" id="design-summary">
+        已放入 0 顆水晶
+      </div>
+    </div>
+    <div class="bbar"><button class="btn" onclick="go('s-order')">確認設計，送出訂單 →</button></div>
+  </div>
+
+  <!-- 訂單確認 -->
+  <div class="screen" id="s-order">
+    <div class="nbar"><div class="nbk" onclick="go('s-design')"><svg viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="ntitle">確認訂單</div></div>
+    <div class="content">
+      <div class="slabel">訂單摘要</div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary)"><span>款式</span><span id="ord-tier" style="color:var(--color-text-primary)">能量手鍊（進階款）</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary)"><span>手圍</span><span id="ord-wrist" style="color:var(--color-text-primary)">–</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary)"><span>珠子數量</span><span id="ord-beads" style="color:var(--color-text-primary)">–</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary)"><span>水晶組合</span><span id="ord-crystals" style="color:var(--color-text-primary);text-align:right;max-width:55%">–</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary)"><span>隨附</span><span id="ord-gift" style="color:var(--color-text-primary)">禮盒 + 水晶能量御守</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:500;padding-top:8px"><span>合計</span><span id="ord-price" style="color:#534AB7">NT$1,980</span></div>
+      </div>
+      <div class="slabel">聯絡資訊</div>
+      <div class="frow"><div><div class="fl">姓名</div><input class="fi" placeholder="你的名字"></div><div><div class="fl">手機</div><input class="fi" placeholder="0912-345-678"></div></div>
+      <div style="margin-bottom:10px"><div class="fl" style="margin-bottom:6px">取貨方式</div><div style="display:flex;gap:6px;flex-wrap:wrap"><div class="rbtn on" onclick="pick(this)">宅配</div><div class="rbtn" onclick="pick(this)">7-11</div><div class="rbtn" onclick="pick(this)">全家</div><div class="rbtn" onclick="pick(this)">面交</div></div></div>
+      <div style="margin-bottom:10px"><div class="fl">備註（刻字 / 特殊需求）</div><textarea class="fi" rows="2" style="resize:none" placeholder="例：刻字「平安」/ 多一顆白水晶"></textarea></div>
+      <div style="background:#EEEDFE;border-radius:8px;padding:10px;font-size:12px;color:#3C3489;line-height:1.7;text-align:center">送出後老師會與你確認設計細節<br>確認完成後開付款連結給你<br><span style="opacity:.7;font-size:11px">製作時間約 7–10 個工作天</span></div>
+    </div>
+    <div class="bbar"><button class="btn" onclick="go('s-done')">送出訂單</button></div>
+  </div>
+
+  <!-- 完成 -->
+  <div class="screen" id="s-done" style="justify-content:center;align-items:center;text-align:center;padding:2rem">
+    <div style="width:64px;height:64px;border-radius:50%;background:#EEEDFE;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:24px;color:#7F77DD">✓</div>
+    <div style="font-size:18px;font-weight:500;margin-bottom:8px">訂單已送出！</div>
+    <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.7;margin-bottom:24px">老師會盡快與你聯繫<br>確認設計後開付款連結給你</div>
+    <div style="background:var(--color-background-secondary);border-radius:10px;padding:12px 16px;width:100%;margin-bottom:16px"><div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:4px">訂單編號</div><div style="font-size:15px;font-weight:500">#WX-20260414-08</div></div>
+    <button class="btn" onclick="go('s-home')">回到首頁</button>
+  </div>
+</div></div>
+
+<script>
+const QUESTIONS=[
+  {text:"1. 關於行動力，你最近最常感到的困擾是？",opts:[{l:"A",t:"容易半途而廢，覺得生命缺乏生機與目標感",e:"木"},{l:"B",t:"猶豫不決，明知道要斷捨離卻狠不下心",e:"金"},{l:"C",t:"提不起勁，對生活失去熱情，覺得心冷冷的",e:"火"},{l:"D",t:"總覺得漂浮不定，生活沒有重心與安定感",e:"土"},{l:"E",t:"思緒卡住，覺得頭腦很重、無法應變新狀況",e:"水"}]},
+  {text:"2. 在人際關係中，你目前最想修補的狀態是？",opts:[{l:"A",t:"覺得自己太過軟弱，容易被別人欺負或影響",e:"金"},{l:"B",t:"覺得自己太過孤僻，想更有勇氣去社交與發光",e:"火"},{l:"C",t:"覺得自己太過僵硬，講話太直容易得罪人",e:"水"},{l:"D",t:"覺得自己太過孤獨，缺乏被支持與包容的感覺",e:"土"},{l:"E",t:"覺得生活一成不變，想認識更有趣的新朋友",e:"木"}]},
+  {text:"3. 關於情緒，哪一種是你最想擺脫的陰影？",opts:[{l:"A",t:"莫名的焦躁與易怒，心火難平",e:"水"},{l:"B",t:"揮之不去的憂鬱與多愁善感",e:"木"},{l:"C",t:"容易受驚嚇、缺乏安全感、膽小",e:"土"},{l:"D",t:"覺得生活乏味、枯燥、沒有任何成就感",e:"火"},{l:"E",t:"懶散、做事拖延、沒有紀律感",e:"金"}]},
+  {text:"4. 當你面對鏡子時，你覺得眼神中缺少了什麼？",opts:[{l:"A",t:"缺少了穿透事物的「銳利度」",e:"金"},{l:"B",t:"缺少了對未來的「期待感」",e:"木"},{l:"C",t:"缺少了平靜如湖的「深邃感」",e:"水"},{l:"D",t:"缺少了自信綻放的「光芒感」",e:"火"},{l:"E",t:"缺少了沉穩大氣的「厚重感」",e:"土"}]},
+  {text:"5. 在財富狀態上，你最想解決的問題是？",opts:[{l:"A",t:"財來財去留不住，就像口袋有個洞",e:"土"},{l:"B",t:"機會就在眼前卻不敢伸手抓取",e:"金"},{l:"C",t:"創意枯竭，不知道如何創造更多價值",e:"木"},{l:"D",t:"缺乏貴人提攜，感覺自己一直在單打獨鬥",e:"水"},{l:"E",t:"知名度打不開，專業不被市場看見",e:"火"}]},
+  {text:"6. 感覺一下你的身體，哪種緊繃感最明顯？",opts:[{l:"A",t:"肩頸僵硬，覺得生活壓力如山大",e:"木"},{l:"B",t:"胸口悶堵，總覺得有一口氣喘不過來",e:"火"},{l:"C",t:"腸胃消化不良，吃東西總覺得不踏實",e:"土"},{l:"D",t:"關節不靈活，覺得整個人很乾澀、沒彈性",e:"水"},{l:"E",t:"肺部虛弱或容易皮膚過敏、防護力低",e:"金"}]},
+  {text:"7. 如果生活是一場戲，你覺得現在的劇本最缺什麼？",opts:[{l:"A",t:"缺一個強而有力的反派讓我戰勝（缺挑戰）",e:"金"},{l:"B",t:"缺一個充滿希望的春天（缺轉機）",e:"木"},{l:"C",t:"缺一段浪漫溫柔的插曲（缺感性）",e:"水"},{l:"D",t:"缺一場萬人矚目的盛宴（缺舞台）",e:"火"},{l:"E",t:"缺一個溫馨穩固的避風港（缺歸屬）",e:"土"}]},
+  {text:"8. 當你晚上失眠時，腦海裡通常在想什麼？",opts:[{l:"A",t:"覺得自己做得不夠好，自責與糾結",e:"木"},{l:"B",t:"擔心未來的變動，害怕失去掌控",e:"土"},{l:"C",t:"瑣事太多，覺得生活一團亂麻",e:"金"},{l:"D",t:"覺得孤單寂寞，渴望有人理解",e:"火"},{l:"E",t:"覺得大腦轉不停，想停卻停不下來",e:"水"}]},
+  {text:"9. 你最希望周遭的人如何看待你？",opts:[{l:"A",t:"「他是一個很有原則、說到做到的人」",e:"金"},{l:"B",t:"「他總是能帶來新想法、很有生命力」",e:"木"},{l:"C",t:"「他在身邊就像水一樣舒服、讓人放鬆」",e:"水"},{l:"D",t:"「他整個人都在發光，充滿正能量」",e:"火"},{l:"E",t:"「他非常可靠，像大山一樣讓人安心」",e:"土"}]},
+  {text:"10. 目前的生活節奏，你最想按下的按鈕是？",opts:[{l:"A",t:"【快進鍵】想快點看到結果，不想再等待",e:"火"},{l:"B",t:"【暫停鍵】想徹底休息，整理思緒再出發",e:"金"},{l:"C",t:"【重播鍵】想找回當初創業或戀愛的初心",e:"木"},{l:"D",t:"【靜音鍵】不想再聽雜音，只想聽見內在聲音",e:"水"},{l:"E",t:"【錄影鍵】想好好記錄現在，穩紮穩打每一天",e:"土"}]}
+];
+
+const EINFO={
+  木:{color:"#639922",bg:"#EAF3DE",desc:"生長力量、開創生機、帶來新的可能與行動力",crystals:[{g:"🟢",n:"綠幽靈",e:"木"},{g:"🪩",n:"東陵玉",e:"木"},{g:"🟡",n:"黃水晶",e:"木"}]},
+  火:{color:"#D85A30",bg:"#FAECE7",desc:"溫暖動力、顯現度、吸引力與正能量燃燒",crystals:[{g:"🔴",n:"紅瑪瑙",e:"火"},{g:"🟠",n:"太陽石",e:"火"},{g:"💎",n:"石榴石",e:"火"}]},
+  土:{color:"#BA7517",bg:"#FAEEDA",desc:"紮根安定、承載力、給予穩固的歸屬感",crystals:[{g:"🟤",n:"茶晶",e:"土"},{g:"🌕",n:"虎眼石",e:"土"},{g:"🟡",n:"黃玉髓",e:"土"}]},
+  金:{color:"#5F5E5A",bg:"#F1EFE8",desc:"果斷清晰、防禦邊界、重建秩序與自我要求",crystals:[{g:"⬜",n:"白水晶",e:"金"},{g:"⚪",n:"月光石",e:"金"},{g:"🔷",n:"拉長石",e:"金"}]},
+  水:{color:"#185FA5",bg:"#E6F1FB",desc:"靈活流動、深邃智慧、帶來平靜與內在清明",crystals:[{g:"⬛",n:"黑曜石",e:"水"},{g:"🔵",n:"海藍寶",e:"水"},{g:"💠",n:"藍紋瑪瑙",e:"水"}]}
+};
+
+const ELABEL_BG={木:"#EAF3DE",火:"#FAECE7",土:"#FAEEDA",金:"#F1EFE8",水:"#E6F1FB"};
+const ELABEL_C={木:"#3B6D11",火:"#993C1D",土:"#854F0B",金:"#5F5E5A",水:"#185FA5"};
+
+const TIERS=[
+  {id:1,name:"淨化手鍊",tier:"基礎款",price:990,tagBg:"#F1EFE8",tagC:"#5F5E5A",priceC:"#5F5E5A",spec:"6–8mm｜基礎配飾×1｜小配飾×1",gift:"基本包裝"},
+  {id:2,name:"能量手鍊",tier:"進階款",price:1980,tagBg:"#EEEDFE",tagC:"#3C3489",priceC:"#534AB7",spec:"6–10mm｜設計配飾×1–2｜小配飾×2",gift:"禮盒 + 水晶能量御守",popular:true},
+  {id:3,name:"御守手鍊",tier:"尊享款",price:3990,tagBg:"#FAEEDA",tagC:"#854F0B",priceC:"#854F0B",spec:"6–12mm｜設計配飾×2｜小配飾×3–4",gift:"禮盒 + 水晶能量御守"}
+];
+
+let curQ=0,answers=new Array(10).fill(null);
+let selectedTier=null,topElem="金";
+let beadSlots=[],selectedCrystal=null,beadCount=18;
+const ALL_CRYSTALS=[
+  {g:"⬜",n:"白水晶",e:"金"},{g:"⬛",n:"黑曜石",e:"水"},{g:"🔵",n:"海藍寶",e:"水"},
+  {g:"🟢",n:"綠幽靈",e:"木"},{g:"🔴",n:"紅瑪瑙",e:"火"},{g:"🟤",n:"茶晶",e:"土"},
+  {g:"⚪",n:"月光石",e:"金"},{g:"💠",n:"藍紋瑪瑙",e:"水"}
+];
+
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id==='s-design') initDesign();
+  if(id==='s-order') fillOrder();
+}
+
+function pick(el){
+  const p=el.parentElement;
+  p.querySelectorAll('.rbtn').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+}
+
+function startQuiz(){curQ=0;answers=new Array(10).fill(null);renderQ();go('s-quiz');}
+
+function renderQ(){
+  const q=QUESTIONS[curQ];
+  const pct=Math.round(((curQ+1)/10)*100);
+  document.getElementById('qprog').style.width=pct+'%';
+  document.getElementById('qplabel').textContent=(curQ+1)+' / 10';
+  document.getElementById('qntitle').textContent='題目 '+(curQ+1)+'／10';
+  const sel=answers[curQ];
+  document.getElementById('qcontent').innerHTML=
+    '<div class="qnum">題目 '+(curQ+1)+' / 10</div>'+
+    '<div class="qtext">'+q.text+'</div>'+
+    q.opts.map((o,i)=>`<div class="qopt${sel===i?' on':''}" onclick="selectOpt(${i})"><div class="qlabel">${o.l}</div><div class="qtext2">${o.t}</div></div>`).join('');
+  const btn=document.getElementById('qbtn');
+  if(sel!==null){btn.textContent=curQ<9?'下一題 →':'查看我的五行結果 →';btn.classList.remove('btn-off');}
+  else{btn.textContent='選擇後繼續';btn.classList.add('btn-off');}
+}
+
+function selectOpt(i){answers[curQ]=i;renderQ();}
+
+function nextQ(){
+  if(answers[curQ]===null)return;
+  if(curQ<9){curQ++;renderQ();}
+  else{calcResult();go('s-result');}
+}
+
+function prevQ(){
+  if(curQ>0){curQ--;renderQ();}else go('s-profile');
+}
+
+function calcResult(){
+  const cnt={木:0,火:0,土:0,金:0,水:0};
+  QUESTIONS.forEach((q,i)=>{if(answers[i]!==null)cnt[q.opts[answers[i]].e]++;});
+  const sorted=Object.entries(cnt).sort((a,b)=>b[1]-a[1]);
+  topElem=sorted[0][0];
+  const info=EINFO[topElem];
+  const total=10;
+  const bars=['木','火','土','金','水'].map(e=>{
+    const p=Math.round((cnt[e]/total)*100);
+    const bc={木:"#639922",火:"#D85A30",土:"#BA7517",金:"#888780",水:"#378ADD"}[e];
+    return `<div class="bar-row"><span style="font-size:12px;width:16px;text-align:center;color:var(--color-text-secondary)">${e}</span><div class="btrack"><div class="bfill" style="width:${p}%;background:${bc}"></div></div><span style="font-size:11px;min-width:28px;text-align:right;color:${p>0?bc:'var(--color-text-tertiary)'}">${p}%</span></div>`;
+  }).join('');
+  const tierHtml=TIERS.map(t=>`
+    <div class="tier-card${selectedTier===t.id?' on':''}" id="tr-${t.id}" onclick="pickTier(${t.id})">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div>
+          <div style="display:flex;align-items:center;gap:4px;margin-bottom:3px">
+            <span style="display:inline-flex;padding:2px 7px;border-radius:7px;font-size:10px;font-weight:500;background:${t.tagBg};color:${t.tagC}">${t.tier}</span>
+            ${t.popular?`<span style="background:#EEEDFE;color:#3C3489;font-size:10px;font-weight:500;padding:2px 7px;border-radius:7px">最多人選</span>`:''}
+          </div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">${t.name}</div>
+          <div style="font-size:16px;font-weight:500;color:${t.priceC}">NT$${t.price.toLocaleString()}</div>
+        </div>
+        <div style="font-size:10px;color:var(--color-text-secondary);text-align:right;line-height:1.7">${t.spec}</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('result-content').innerHTML=`
+    <div style="background:${info.bg};border-radius:12px;padding:14px;text-align:center;margin-bottom:12px">
+      <div style="font-size:24px;font-weight:500;color:${info.color};margin-bottom:4px">需補充「${topElem}」能量</div>
+      <div style="font-size:12px;font-weight:500;color:${info.color};margin-bottom:4px">靈魂頻率目前處於【${topElem}】能量低潮期</div>
+      <div style="font-size:11px;color:${info.color};line-height:1.6">建議補充 ${Math.round((cnt[topElem]/total)*100)}% 的${topElem}元素<br>${info.desc}</div>
+    </div>
+    <div class="slabel">五行能量分布</div>
+    <div class="card">${bars}</div>
+    <div class="slabel">選擇你的方案</div>
+    ${tierHtml}
+  `;
+}
+
+function pickTier(id){
+  selectedTier=id;
+  TIERS.forEach(t=>{
+    const el=document.getElementById('tr-'+t.id);
+    if(el){el.classList.toggle('on',t.id===id);el.style.border=t.id===id?'2px solid #7F77DD':'0.5px solid var(--color-border-tertiary)';el.style.background=t.id===id?'#FAFAFF':'';}
+  });
+  const btn=document.getElementById('tier-next-btn');
+  btn.textContent='前往量手圍，開始設計 →';
+  btn.classList.remove('btn-off');
+}
+
+function goDesign(){
+  if(!selectedTier)return;
+  go('s-measure');
+}
+
+function updateBeadCount(){
+  const v=parseFloat(document.getElementById('wrist-cm').value)||15;
+  const tierObj=TIERS.find(t=>t.id===(selectedTier||2));
+  const maxMm=tierObj?parseInt(tierObj.spec):8;
+  const beadMm=maxMm<=8?8:10;
+  beadCount=Math.max(12,Math.min(24,Math.round((v*10)/(beadMm+1))));
+  document.getElementById('design-bead-count').textContent=beadCount+' 顆';
+}
+
+function initDesign(){
+  updateBeadCount();
+  beadSlots=new Array(beadCount).fill(null);
+  selectedCrystal=EINFO[topElem]?.crystals[0]||ALL_CRYSTALS[0];
+  renderPicker();
+  drawBracelet();
+  updateSummary();
+}
+
+function renderPicker(){
+  const recElems=topElem?[topElem]:[]; 
+  const recCrystals=ALL_CRYSTALS.filter(c=>recElems.includes(c.e));
+  const others=ALL_CRYSTALS.filter(c=>!recElems.includes(c.e));
+  const ordered=[...recCrystals,...others];
+  document.getElementById('crystal-picker').innerHTML=ordered.map(c=>`
+    <div class="picker-item${recElems.includes(c.e)?' rec-item':''}${selectedCrystal&&selectedCrystal.n===c.n?' chosen':''}" onclick="pickCrystal(${ALL_CRYSTALS.indexOf(c)})" style="padding:6px 4px;text-align:center;cursor:pointer">
+      <div style="font-size:16px">${c.g}</div>
+      <div style="font-size:10px;font-weight:500;color:var(--color-text-primary);margin-top:2px">${c.n}</div>
+      <div style="font-size:9px;padding:1px 4px;border-radius:4px;margin-top:2px;display:inline-block;background:${ELABEL_BG[c.e]};color:${ELABEL_C[c.e]}">${c.e}${recElems.includes(c.e)?' ★':''}</div>
+    </div>`).join('');
+}
+
+function pickCrystal(i){
+  selectedCrystal=ALL_CRYSTALS[i];
+  renderPicker();
+}
+
+function drawBracelet(){
+  const canvas=document.getElementById('bracelet-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const W=270,H=270,cx=135,cy=135,R=95,beadR=12;
+  ctx.clearRect(0,0,W,H);
+  const dark=window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const lineCol=dark?'rgba(255,255,255,.12)':'rgba(0,0,0,.1)';
+  const emptyFill=dark?'#2a2a2a':'#f5f4f0';
+  const emptyStroke=dark?'rgba(255,255,255,.2)':'#c8c6be';
+  ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.strokeStyle=lineCol;ctx.lineWidth=2;ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);
+  for(let i=0;i<beadCount;i++){
+    const angle=(i/beadCount)*Math.PI*2-Math.PI/2;
+    const x=cx+R*Math.cos(angle),y=cy+R*Math.sin(angle);
+    ctx.beginPath();ctx.arc(x,y,beadR,0,Math.PI*2);
+    if(beadSlots[i]){
+      ctx.fillStyle=emptyFill;ctx.fill();
+      ctx.strokeStyle='#7F77DD';ctx.lineWidth=1.5;ctx.stroke();
+      ctx.font=`${beadR*1.3}px sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(beadSlots[i].g,x,y);
+    } else {
+      ctx.fillStyle=emptyFill;ctx.fill();
+      ctx.strokeStyle=emptyStroke;ctx.lineWidth=1;ctx.stroke();
+      ctx.fillStyle=dark?'rgba(255,255,255,.25)':'rgba(0,0,0,.18)';
+      ctx.font=`${beadR}px sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText('+',x,y);
+    }
+  }
+  canvas.onclick=(e)=>{
+    const rect=canvas.getBoundingClientRect();
+    const mx=e.clientX-rect.left,my=e.clientY-rect.top;
+    const scaleX=W/rect.width,scaleY=H/rect.height;
+    const px=mx*scaleX,py=my*scaleY;
+    for(let i=0;i<beadCount;i++){
+      const angle=(i/beadCount)*Math.PI*2-Math.PI/2;
+      const bx=cx+R*Math.cos(angle),by=cy+R*Math.sin(angle);
+      if(Math.hypot(px-bx,py-by)<beadR+4){
+        beadSlots[i]=beadSlots[i]?null:selectedCrystal;
+        drawBracelet();updateSummary();
+        return;
+      }
+    }
+  };
+}
+
+function updateSummary(){
+  const filled=beadSlots.filter(Boolean);
+  const names=[...new Set(filled.map(b=>b.n))];
+  document.getElementById('design-summary').textContent=`已放入 ${filled.length} / ${beadCount} 顆・${names.length>0?names.join('、'):'尚未選擇水晶'}`;
+}
+
+function fillOrder(){
+  const t=TIERS.find(t=>t.id===(selectedTier||2));
+  const wrist=document.getElementById('wrist-cm')?.value||'–';
+  const filled=beadSlots.filter(Boolean);
+  const names=[...new Set(filled.map(b=>b.n))];
+  document.getElementById('ord-tier').textContent=t?`${t.name}（${t.tier}）`:'–';
+  document.getElementById('ord-wrist').textContent=wrist?wrist+' cm':'–';
+  document.getElementById('ord-beads').textContent=beadCount+' 顆';
+  document.getElementById('ord-crystals').textContent=names.length>0?names.join('、'):'未指定';
+  document.getElementById('ord-gift').textContent=t?t.gift:'–';
+  document.getElementById('ord-price').textContent=t?`NT$${t.price.toLocaleString()}`:'–';
+}
+</script>
